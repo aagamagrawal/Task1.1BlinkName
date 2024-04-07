@@ -1,0 +1,74 @@
+// Define constants for LED pin and Morse code timings
+const int LED_PIN = LED_BUILTIN;
+const int dotDuration = 200; // Duration of a dot (milliseconds)
+const int dashDuration = 3 * dotDuration; // Duration of a dash (milliseconds)
+const int letterSpace = 3 * dotDuration; // Space between letters (milliseconds)
+const int wordSpace = 7 * dotDuration; // Space between words (milliseconds)
+
+// Function to turn on the LED
+void turnOnLED(int duration) {
+  digitalWrite(LED_PIN, HIGH);
+  delay(duration);
+}
+
+// Function to turn off the LED
+void turnOffLED(int duration) {
+  digitalWrite(LED_PIN, LOW);
+  delay(duration);
+}
+
+// Function to blink a dot
+void dot() {
+  turnOnLED(dotDuration);
+  turnOffLED(dotDuration);
+}
+
+// Function to blink a dash
+void dash() {
+  turnOnLED(dashDuration);
+  turnOffLED(dotDuration);
+}
+
+// Function to blink a letter according to Morse code
+void blinkLetter(char letter) {
+  switch (letter) {
+    case 'A':
+    case 'a':
+      dot();
+      turnOffLED(letterSpace);
+      dash();
+      break;
+    case 'G':
+    case 'g':
+      dash();
+      turnOffLED(letterSpace);
+      dash();
+      turnOffLED(letterSpace);
+      dot();
+      break;
+    case 'M':
+    case 'm':
+      dash();
+      turnOffLED(letterSpace);
+      dash();
+      break;
+    default:
+      // If the character is not recognized, do nothing
+      break;
+  }
+}
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  // Print "AGAM" in Morse code
+  blinkLetter('A');
+  blinkLetter('G');
+  blinkLetter('A');
+  blinkLetter('M');
+  
+  // Space between words
+  delay(wordSpace);
+}
